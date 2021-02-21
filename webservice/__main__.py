@@ -75,7 +75,8 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             issue_url,
             data={"state": "closed"},
             oauth_token=installation_access_token["token"],
-        )        
+        )
+        push_to_github("test2.txt",repo_full_name,"master",installation_access_token)
 
 @router.register("issue_comment", action="created")
 async def issue_comment_created(event, gh, *args, **kwargs):
@@ -103,6 +104,27 @@ def connectDB():
     #DATABASE_URL = os.environ['DATABASE_URL']
     #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     pass
+
+def push_to_github(filename, repo, branch, token):
+    url="https://api.github.com/repos/"+repo+"/contents/"+filename
+
+    base64content=base64.b64encode("this is samuel motal")
+
+    data = requests.get(url+'?ref='+branch, headers = {"Authorization": "token "+token}).json()
+    sha = data['sha']
+
+    if base64content.decode('utf-8')+"\n" != data['content']:
+        message = json.dumps({"message":"update",
+                            "branch": branch,
+                            "content": base64content.decode("utf-8") ,
+                            "sha": sha
+                            })
+
+        resp=requests.put(url, data = message, headers = {"Content-Type": "application/json", "Authorization": "token "+token})
+
+        print(resp)
+    else:
+        print("nothing to update")
     
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
