@@ -13,6 +13,7 @@ from gidgethub import sansio
 from gidgethub import apps
 import os
 import psycopg2
+import base64
 
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
