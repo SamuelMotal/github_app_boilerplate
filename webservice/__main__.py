@@ -11,6 +11,8 @@ from gidgethub import aiohttp as gh_aiohttp
 from gidgethub import routing
 from gidgethub import sansio
 from gidgethub import apps
+import os
+import psycopg2
 
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
@@ -95,12 +97,19 @@ async def issue_comment_created(event, gh, *args, **kwargs):
         accept="application/vnd.github.squirrel-girl-preview+json",
     )    
 
+    
+def connectDB():
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
-
+    
     app.router.add_routes(routes)
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
+    print('starting db')
+    connectDB()
     print('starting the server')
     web.run_app(app, port=port)
