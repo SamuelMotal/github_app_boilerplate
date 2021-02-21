@@ -74,6 +74,7 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             issue_url,
             data={"state": "closed"},
             oauth_token=installation_access_token["token"],
+        )
         
 
 @router.register("issue_comment", action="created")
