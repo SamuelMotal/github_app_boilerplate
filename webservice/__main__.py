@@ -58,22 +58,23 @@ async def repo_installation_added(event, gh, *args, **kwargs):
     )
     maintainer = event.data["sender"]["login"]
     message = f"Thanks for installing me, @{maintainer}! (I'm a bot)."
-    reproname = event.data["repositories"]["full_name"]
-    url = f"/repos/{reproname}/issues"
-    response = await gh.post(
-        url,
-        data={
-        "title": "Mariatta's bot was installed",
-        "body": message
-        },
-        oauth_token=installation_access_token["token"],
-    )
-    issue_url = response["url"]
-    await gh.patch(
-        issue_url,
-        data={"state": "closed"},
-        oauth_token=installation_access_token["token"],
-    )
+    for repo in event.data["repositories"]:
+
+        repo_full_name = repo["full_name"]
+        response = await gh.post(
+            f"/repos/{repo_full_name}/issues",
+            data={
+                "title": "Thanks for installing me",
+                "body": f"You're the best! @{sender_name}",
+            },
+            oauth_token=installation_access_token["token"],
+        )
+        issue_url = response["url"]
+        await gh.patch(
+            issue_url,
+            data={"state": "closed"},
+            oauth_token=installation_access_token["token"],
+        
 
 @router.register("issue_comment", action="created")
 async def issue_comment_created(event, gh, *args, **kwargs):
