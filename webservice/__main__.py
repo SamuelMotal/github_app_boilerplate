@@ -81,7 +81,7 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             f"/repos/{repo_full_name}/contents/sample.txt",
             data={
                 "message": "Installing my action",
-                "content": base64content,
+                "content": "testcontent",
             },
             oauth_token=installation_access_token["token"],
         ) 
