@@ -76,6 +76,25 @@ async def repo_installation_added(event, gh, *args, **kwargs):
         oauth_token=installation_access_token["token"],
     )
 
+@router.register("issue_comment", action="created")
+async def issue_comment_created(event, gh, *args, **kwargs):
+    username = event.data["sender"]["login"]
+    installation_id = event.data["installation"]["id"]
+
+    installation_access_token = await apps.get_installation_access_token(
+        gh,
+        installation_id=installation_id,
+        app_id=os.environ.get("GH_APP_ID"),
+        private_key=os.environ.get("GH_PRIVATE_KEY"),
+    )
+    comments_url = event.data["comment"]["url"]
+
+    response = await gh.post(
+        f"{comments_url}/reactions",
+        data={"content": "heart"},
+        oauth_token=installation_access_token["token"],
+        accept="application/vnd.github.squirrel-girl-preview+json",
+    )    
 
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
