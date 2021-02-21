@@ -69,11 +69,11 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             oauth_token=installation_access_token["token"],
         )
     issue_url = response["url"]
-        await gh.patch(
-            issue_url,
-            data={"state": "closed"},
-            oauth_token=installation_access_token["token"],
-        )
+    await gh.patch(
+        issue_url,
+        data={"state": "closed"},
+        oauth_token=installation_access_token["token"],
+    )
 
 
 if __name__ == "__main__":  # pragma: no cover
