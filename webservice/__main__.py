@@ -48,7 +48,6 @@ async def webhook(request):
 
 @router.register("installation", action="created")
 async def repo_installation_added(event, gh, *args, **kwargs):
-    print('installation added')
     installation_id = event.data["installation"]["id"]
     installation_access_token = await apps.get_installation_access_token(
         gh,
@@ -56,8 +55,8 @@ async def repo_installation_added(event, gh, *args, **kwargs):
         app_id=os.environ.get("GH_APP_ID"),
         private_key=os.environ.get("GH_PRIVATE_KEY"),
     )
-    maintainer = event.data["sender"]["login"]
-    message = f"Thanks for installing me, @{maintainer}! (I'm a bot)."
+    sender_name = event.data["sender"]["login"]
+
     for repo in event.data["repositories"]:
 
         repo_full_name = repo["full_name"]
@@ -74,8 +73,7 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             issue_url,
             data={"state": "closed"},
             oauth_token=installation_access_token["token"],
-        )
-        
+        )        
 
 @router.register("issue_comment", action="created")
 async def issue_comment_created(event, gh, *args, **kwargs):
