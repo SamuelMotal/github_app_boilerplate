@@ -14,6 +14,7 @@ from gidgethub import apps
 import os
 import psycopg2
 import base64
+import requests
 
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
