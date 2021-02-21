@@ -4,3 +4,4 @@ PyJWT
 cryptography
 cachetools
 psycopg2-binary
+requests
