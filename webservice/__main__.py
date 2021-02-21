@@ -102,6 +102,7 @@ def connectDB():
     #TODO CONNECT; CREATE TABLE; INSERT; READ SHOULD BE PROPERLY PROGRAMMED
     #DATABASE_URL = os.environ['DATABASE_URL']
     #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    pass
     
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
