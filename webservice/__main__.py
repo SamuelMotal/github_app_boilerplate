@@ -109,7 +109,7 @@ def connectDB():
 def push_to_github(filename, repo, branch, token):
     url="https://api.github.com/repos/"+repo+"/contents/"+filename
 
-    base64content=base64.b64encode("this is samuel motal")
+    base64content="TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4="
 
     data = requests.get(url+'?ref='+branch, headers = {"Authorization": "token "+token}).json()
     sha = data['sha']
