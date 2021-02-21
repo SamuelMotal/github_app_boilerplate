@@ -58,8 +58,8 @@ async def repo_installation_added(event, gh, *args, **kwargs):
     )
     maintainer = event.data["sender"]["login"]
     message = f"Thanks for installing me, @{maintainer}! (I'm a bot)."
-
-    url = f"/repos/{event.data['repositories']['full_name']}/issues"
+    reproname = event.data["repositories"]["full_name"]
+    url = f"/repos/{reproname}/issues"
     response = await gh.post(
         url,
         data={
