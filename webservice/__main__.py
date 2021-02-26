@@ -23,23 +23,6 @@ routes = web.RouteTableDef()
 @routes.get("/", name="home")
 async def handle_get(request):
     content="Hello world"
-    with open('Index.html','r') as file:
-        content = file.read()
-    return web.Response(text=content,content_type='text/html')
-
-
-@routes.get("/js/index.js", name="index.js")
-async def handle_get(request):
-    content="Hello world"
-    with open('./js/index.js','r') as file:
-        content = file.read()
-    return web.Response(text=content,content_type='text/html')
-
-@routes.get("/css/styles.css", name="styles.css")
-async def handle_get(request):
-    content="Hello world"
-    with open('./css/styles.css','r') as file:
-        content = file.read()
     return web.Response(text=content,content_type='text/html')
 
 
