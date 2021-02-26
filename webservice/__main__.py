@@ -86,7 +86,6 @@ def createInstToken():
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode()
 
-    
 
 #@router.register("installation", action="created")
 async def repo_installation_added(event, gh, *args, **kwargs):
