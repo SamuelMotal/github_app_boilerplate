@@ -72,7 +72,7 @@ def createInstToken():
     actual_jwt = jwt.encode(payload, private_key, algorithm='RS256')
 
 	#headers = {"Authorization": "Bearer {}".format(actual_jwt.decode())
-    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),
+    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode()),
                "Accept": "application/vnd.github.machine-man-preview+json"}
     resp = requests.get('https://api.github.com/app', headers=headersToSend)
 

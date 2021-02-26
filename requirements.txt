@@ -1,6 +1,6 @@
 aiohttp
 gidgethub>=4.1.0
-PyJWT
+PyJWT==1.7.1
 cryptography
 cachetools
 psycopg2-binary
