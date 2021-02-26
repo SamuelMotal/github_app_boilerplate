@@ -87,6 +87,10 @@ def createInstToken():
     resp = requests.get('https://api.github.com/repos/SamuelMotal/didactic-guacamole/installation', headers=headersToSend)
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
+    print('Getting another repository information...')
+    resp = requests.get('https://api.github.com/repos/SamuelMotal/spexx/installation', headers=headersToSend)
+    print('Code: ', resp.status_code)
+    print('Content: ', resp.content.decode())
     ##TODO WITH INSTALLATION ID TOKEN CAN BE CREATED - NEXT STEP
 
 
