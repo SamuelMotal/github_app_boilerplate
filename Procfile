@@ -1,1 +1,1 @@
-web: python3 -m webservice
+web: gunicorn app:app
