@@ -26,6 +26,7 @@ routes = web.RouteTableDef()
 
 @routes.get("/", name="home")
 async def handle_get(request):
+    createInstToken()
     content="Hello world"
     return web.Response(text=content,content_type='text/html')
 
@@ -72,7 +73,7 @@ def createInstToken():
     actual_jwt = jwt.encode(payload, private_key, algorithm='RS256')
 
 	#headers = {"Authorization": "Bearer {}".format(actual_jwt.decode())
-    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode()),
+    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),
                "Accept": "application/vnd.github.machine-man-preview+json"}
     resp = requests.get('https://api.github.com/app', headers=headersToSend)
 
