@@ -13,6 +13,8 @@ from gidgethub import sansio
 from gidgethub import apps
 import os
 import psycopg2
+from cryptography.hazmat.backends import default_backend
+import jwt
 
 #testchange
 router = routing.Router()
@@ -49,8 +51,38 @@ async def webhook(request):
         return web.Response(status=500)
 
 
+def createInstToken():
+    private_key=os.environ.get("GH_PRIVATE_KEY")
+    cert_bytes = private_key.encode()
+    private_key = default_backend().load_pem_private_key(cert_bytes, None)
+
+    time_since_epoch_in_seconds = int(time.time())
+    
+    payload = {
+      # issued at time
+      'iat': time_since_epoch_in_seconds,
+      # JWT expiration time (10 minute maximum)
+      'exp': time_since_epoch_in_seconds + (10 * 60),
+      # GitHub App's identifier
+      'iss': '4397'
+    }
+
+    actual_jwt = jwt.encode(payload, private_key, algorithm='RS256')
+
+    headers = {"Authorization": "Bearer {}".format(actual_jwt.decode()),
+               "Accept": "application/vnd.github.machine-man-preview+json"}
+    resp = requests.get('https://api.github.com/app', headers=app_headers())
+
+    print('Code: ', resp.status_code)
+    print('Content: ', resp.content.decode())
+    
+
+print('Code: ', resp.status_code)
+print('Content: ', resp.content.decode())
+
 @router.register("installation", action="created")
 async def repo_installation_added(event, gh, *args, **kwargs):
+    createInstToken()
     installation_id = event.data["installation"]["id"]
     installation_access_token = await apps.get_installation_access_token(
         gh,
