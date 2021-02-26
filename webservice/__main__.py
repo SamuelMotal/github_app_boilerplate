@@ -73,8 +73,7 @@ def createInstToken():
     actual_jwt = jwt.encode(payload, private_key, algorithm='RS256')
 
     #headers = {"Authorization": "Bearer {}".format(actual_jwt.decode())
-    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),
-               "Accept": "application/vnd.github.machine-man-preview+json"}
+    headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),"Accept": "application/vnd.github.machine-man-preview+json"}
     resp = requests.get('https://api.github.com/app', headers=headersToSend)
 
     print('Code: ', resp.status_code)
@@ -87,8 +86,9 @@ def createInstToken():
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode()
 
+    
 
-@router.register("installation", action="created")
+#@router.register("installation", action="created")
 async def repo_installation_added(event, gh, *args, **kwargs):
     createInstToken()
     installation_id = event.data["installation"]["id"]
@@ -126,6 +126,7 @@ async def repo_installation_added(event, gh, *args, **kwargs):
             },
             oauth_token=installation_access_token["token"],
         ) 
+
 
 @router.register("issue_comment", action="created")
 async def issue_comment_created(event, gh, *args, **kwargs):
