@@ -79,6 +79,14 @@ def createInstToken():
 
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
+	
+	print('checking repositories of installation')
+	
+	resp = requests.get('https://api.github.com/installation/repositories', headers=headersToSend)
+
+    print('Code: ', resp.status_code)
+    print('Content: ', resp.content.decode()
+	
 
 @router.register("installation", action="created")
 async def repo_installation_added(event, gh, *args, **kwargs):
