@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='assets/lightning.png')}}"/>
+    <link rel="shortcut icon" type="image/png" href="assets/lightning.png"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-    <!--<link rel="stylesheet" href="css/styles.css">-->
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Lightning Interface</title>
 </head>
 <body class="bg-gray-200 custom-scrollbar">
@@ -16,9 +15,7 @@
     <header class="z-10 fixed flex flex-wrap items-center w-full py-3 header-bg">
         <div class="flex flex-no-wrap w-full">
             <div id="system-info" class="w-1/5 flex justify-center items-center px-3">
-                <!--<img class="h-10" src="assets/lightning.png" alt="Logo">-->
-				<img class="h-10" src="{{ url_for('static', filename='assets/lightning.png')}}" alt="Logo">
-				<!--<img class="h-10" src="{{url_for('static', filename='assets/lightning.png')}}" alt="Logo">-->
+                <img class="h-10" src="assets/lightning.png" alt="Logo">
                 <span class="hidden lg:block ml-3 text-white text-center text-lg font-normal tracking-wider header-logo-text">Lightning Interface</span>
             </div>
             <div id="header-content" class="w-4/5 flex items-center">
@@ -156,8 +153,7 @@
     <!-- /CONTENT -->
 
     <!-- LOAD SCRIPT -->
-    <!--<script src="js/index.js"></script>-->
-	<script src="{{ url_for('static', filename='js/index.js')}}"></script>
+    <script src="js/index.js"></script>
     <!-- /LOAD SCRIPT -->
 </body>
 </html>
