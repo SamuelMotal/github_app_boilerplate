@@ -88,7 +88,7 @@ def createInstToken():
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
     print('Getting another repository information...')
-    resp = requests.get('https://api.github.com/repos/SamuelMotal/spexx/installation', headers=headersToSend)
+    resp = requests.get('https://api.github.com/repos/SamuelMotal/github_app_boilerplate/installation', headers=headersToSend)
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
     ##TODO WITH INSTALLATION ID TOKEN CAN BE CREATED - NEXT STEP
