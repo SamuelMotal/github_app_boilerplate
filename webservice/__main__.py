@@ -67,7 +67,7 @@ def createInstToken():
       # JWT expiration time (10 minute maximum)
       'exp': time_since_epoch_in_seconds + (10 * 60),
       # GitHub App's identifier
-      'iss': '101589'
+      'iss': os.environ.get("GH_APP_ID")
     }
 
     actual_jwt = jwt.encode(payload, private_key, algorithm='RS256')
