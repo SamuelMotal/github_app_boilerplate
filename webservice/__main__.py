@@ -20,6 +20,13 @@ cache = cachetools.LRUCache(maxsize=500)
 
 routes = web.RouteTableDef()
 
+@routes.get("/", name="home")
+async def handle_get(request):
+    content="Hello world"
+    with open('Index.html','r') as file:
+        content = file.read()
+    return web.Response(text=content,content_type='text/html')
+
 
 @routes.get("/js/index.js", name="index.js")
 async def handle_get(request):
