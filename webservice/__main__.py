@@ -78,10 +78,12 @@ def createInstToken():
 
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
+    token=resp.content.decode()
+    headersWithToken={"Authorization": "token {}".format(token),"Accept": "application/vnd.github.machine-man-preview+json"}
 
     print('checking repositories of installation')
 
-    resp = requests.get('https://api.github.com/installation/repositories', headers=headersToSend)
+    resp = requests.get('https://api.github.com/installation/repositories', headers=headersWithToken)
 
     print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
