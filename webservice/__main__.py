@@ -75,20 +75,12 @@ def createInstToken():
 
     #headers = {"Authorization": "Bearer {}".format(actual_jwt.decode())
     headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),"Accept": "application/vnd.github.machine-man-preview+json"}
-    resp = requests.get('https://api.github.com/app/installations{installation_id}/access_tokens', headers=headersToSend)
+    resp = requests.get('https://api.github.com/app/installations', headers=headersToSend)
 
     ##TODO add body elements
     print('Code: ', resp.status_code)
-    #print('Content: ', resp.content.decode())
-    token=resp.content.decode()
-    headersWithToken={"Authorization": "token {}".format(token),"Accept": "application/vnd.github.machine-man-preview+json"}
-
-    print('checking repositories of installation')
-
-    resp = requests.get('https://api.github.com/installation/repositories', headers=headersWithToken)
-
-    print('Code: ', resp.status_code)
     print('Content: ', resp.content.decode())
+    ##TODO WITH INSTALLATION ID TOKEN CAN BE CREATED - NEXT STEP
 
 
 @router.register("installation", action="created")
