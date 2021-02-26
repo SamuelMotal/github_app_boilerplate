@@ -24,7 +24,7 @@ routes = web.RouteTableDef()
 @routes.get("/", name="home")
 async def handle_get(request):
     content="Hello world"
-    with open('index.html','r') as file:
+    with open('Index.html','r') as file:
         content = file.read()
     return web.Response(text=content,content_type='text/html')
 
