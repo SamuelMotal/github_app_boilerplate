@@ -172,20 +172,18 @@ def connectDB():
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
     app.router.add_routes(routes)
-    cors = aiohttp_cors.setup(app, defaults={
-    "*": aiohttp_cors.ResourceOptions(
-            allow_credentials=True,
-            expose_headers="*",
-            allow_headers="*",
-        )
-   })
+    cors = aiohttp_cors.setup(app)
 
-    # Add all resources to `CorsConfig`.
-    resource = cors.add(app.router.add_resource("/validate/{user}/{repository}"))
-    cors.add(resource.add_route("GET", create))
-    cors.add(resource.add_route("PUT", create))
-    cors.add(resource.add_route("POST", create))
-    cors.add(resource.add_route("DELETE", create))
+    resource = cors.add(app.router.add_resource("/validate"))
+    route = cors.add(
+    resource.add_route("GET", create), {
+        "http://client.example.org": aiohttp_cors.ResourceOptions(
+            allow_credentials=True,
+            expose_headers=("X-Custom-Server-Header",),
+            allow_headers=("X-Requested-With", "Content-Type"),
+            max_age=3600,
+        )
+    })
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
