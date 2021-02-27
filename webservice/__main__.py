@@ -26,7 +26,7 @@ routes = web.RouteTableDef()
 
 @routes.get("/", name="home")
 async def handle_get(request):
-    createInstToken()
+    validateInstallation("SamuelMotal","github_app_boilerplate")
     content="Hello world"
     return web.Response(text=content,content_type='text/html')
 
@@ -54,7 +54,7 @@ async def webhook(request):
         return web.Response(status=500)
 
 
-def createInstToken():
+def validateInstallation(username,repository_name):
     private_key=os.environ.get("GH_PRIVATE_KEY")
     cert_bytes = private_key.encode()
     private_key = default_backend().load_pem_private_key(cert_bytes, None)
@@ -74,24 +74,24 @@ def createInstToken():
 
     #headers = {"Authorization": "Bearer {}".format(actual_jwt.decode())
     headersToSend = {"Authorization": "Bearer {}".format(actual_jwt.decode('utf-8')),"Accept": "application/vnd.github.machine-man-preview+json"}
-    resp = requests.get('https://api.github.com/app/installations', headers=headersToSend)
-
-    ##from this response we can get the installation_id and generate with the installation id the access token
-    print('Code: ', resp.status_code)
-    print('Content: ', resp.content.decode())
-    print('Getting user information...')
-    resp = requests.get('https://api.github.com/users/SamuelMotal/installation', headers=headersToSend)
-    print('Code: ', resp.status_code)
-    print('Content: ', resp.content.decode())
-    print('Getting repository information...')
-    resp = requests.get('https://api.github.com/repos/SamuelMotal/didactic-guacamole/installation', headers=headersToSend)
-    print('Code: ', resp.status_code)
-    print('Content: ', resp.content.decode())
-    print('Getting another repository information...')
-    resp = requests.get('https://api.github.com/repos/SamuelMotal/github_app_boilerplate/installation', headers=headersToSend)
-    print('Code: ', resp.status_code)
-    print('Content: ', resp.content.decode())
-    ##TODO WITH INSTALLATION ID TOKEN CAN BE CREATED - NEXT STEP
+    #resp = requests.get('https://api.github.com/users/user/installation', headers=headersToSend)
+    #print('Code: ', resp.status_code)
+    #print('Content: ', resp.content.decode())
+    #print('Getting repository information...')
+    #resp = requests.get('https://api.github.com/repos/SamuelMotal/didactic-guacamole/installation', headers=headersToSend)
+    #print('Code: ', resp.status_code)
+    #print('Content: ', resp.content.decode())
+    #print('Getting another repository information...')
+    #resp = requests.get('https://api.github.com/repos/SamuelMotal/github_app_boilerplate/installation', headers=headersToSend)
+    #print('Code: ', resp.status_code)
+    #print('Content: ', resp.content.decode())
+    #https://docs.github.com/en/rest/reference/apps#get-a-repository-installation-for-the-authenticated-app
+    resp = requests.get('https://api.github.com/repos/{username}/{repository_name}/installation', headers=headersToSend)
+    print(resp.content.decode()['login'])
+    if(resp.status_code == 200 && resp.content.decode()['login']==username):
+        print("installation validated!!")
+    else:
+        print("installation not validated!!!")
 
 
 @router.register("installation", action="created")
