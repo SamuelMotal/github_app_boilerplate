@@ -25,15 +25,15 @@ routes = web.RouteTableDef()
 
 @routes.get("/", name="home")
 async def handle_get(request):
-    content = validateInstallation("SamuelMotal","github_app_boilerplate")
+    content = "Welcome"
     return web.Response(text=content,content_type='text/html')
 
 
-@routes.get('/create/{first_name}/{last_name}')
+@routes.get('/validate/{user}/{repository}')
 def create(request):
-    firstName=request.match_info['first_name']
-    lastName=request.match_info['last_name']
-    content=f"Hell mr. {firstName} {lastName}"
+    user=request.match_info['user']
+    repository=request.match_info['repository']
+    content = validateInstallation(user,repository)
     return web.Response(text=content,content_type='text/html')
 
 
