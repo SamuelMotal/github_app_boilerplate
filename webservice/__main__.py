@@ -170,6 +170,7 @@ def connectDB():
     pass
     
 if __name__ == "__main__":  # pragma: no cover
+    #test
     app = web.Application()
     app.router.add_routes(routes)
     cors = aiohttp_cors.setup(app)
