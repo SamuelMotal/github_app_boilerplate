@@ -26,8 +26,7 @@ routes = web.RouteTableDef()
 
 @routes.get("/", name="home")
 async def handle_get(request):
-    validateInstallation("SamuelMotal","github_app_boilerplate")
-    content="Hello world"
+    content = validateInstallation("SamuelMotal","github_app_boilerplate")
     return web.Response(text=content,content_type='text/html')
 
 
@@ -89,9 +88,9 @@ def validateInstallation(username,repository_name):
     resp = requests.get(f'https://api.github.com/repos/{username}/{repository_name}/installation', headers=headersToSend)
     print(resp.json())
     if(resp.status_code == 200 and resp.json()["account"]["login"]==username):
-        print("installation validated!!")
+        return "installation validated!!"
     else:
-        print("installation not validated!!!")
+        return "installation not validated!!!"
 
 
 @router.register("installation", action="created")
