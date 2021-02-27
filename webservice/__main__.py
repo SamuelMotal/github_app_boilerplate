@@ -176,15 +176,18 @@ if __name__ == "__main__":  # pragma: no cover
     cors = aiohttp_cors.setup(app)
 
     resource = cors.add(app.router.add_resource("/validate"))
-    route = cors.add(
-    resource.add_route("GET", create), {
-        "http://client.example.org": aiohttp_cors.ResourceOptions(
+    # Configure default CORS settings.
+    cors = aiohttp_cors.setup(app, defaults={
+        "*": aiohttp_cors.ResourceOptions(
             allow_credentials=True,
-            expose_headers=("X-Custom-Server-Header",),
-            allow_headers=("X-Requested-With", "Content-Type"),
-            max_age=3600,
+            expose_headers="*",
+            allow_headers="*",
         )
     })
+
+    # Configure CORS on all routes.
+    for route in list(app.router.routes()):
+        cors.add(route)
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
