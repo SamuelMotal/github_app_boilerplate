@@ -182,10 +182,10 @@ if __name__ == "__main__":  # pragma: no cover
 
     # Add all resources to `CorsConfig`.
     resource = cors.add(app.router.add_resource("/validate/{user}/{repository}"))
-    cors.add(resource.add_route("GET", handler_get))
-    cors.add(resource.add_route("PUT", handler_put))
-    cors.add(resource.add_route("POST", handler_put))
-    cors.add(resource.add_route("DELETE", handler_delete))
+    cors.add(resource.add_route("GET", create))
+    cors.add(resource.add_route("PUT", create))
+    cors.add(resource.add_route("POST", create))
+    cors.add(resource.add_route("DELETE", create))
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
