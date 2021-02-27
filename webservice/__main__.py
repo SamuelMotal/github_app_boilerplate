@@ -29,7 +29,7 @@ async def handle_get(request):
     content = "Welcome"
     return web.Response(text=content,content_type='text/html')
 
-
+@asyncio.coroutine
 @routes.get('/validate/{user}/{repository}')
 def create(request):
     user=request.match_info['user']
@@ -173,9 +173,7 @@ if __name__ == "__main__":  # pragma: no cover
     #test
     app = web.Application()
     app.router.add_routes(routes)
-    cors = aiohttp_cors.setup(app)
 
-    resource = cors.add(app.router.add_resource("/validate"))
     # Configure default CORS settings.
     cors = aiohttp_cors.setup(app, defaults={
         "*": aiohttp_cors.ResourceOptions(
