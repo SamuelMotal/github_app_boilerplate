@@ -17,8 +17,6 @@ from cryptography.hazmat.backends import default_backend
 import jwt
 import time
 import requests
-from flask import Flask, render_template
-from flask import send_file
 
 app = Flask(__name__)
 router = routing.Router()
@@ -32,9 +30,12 @@ async def handle_get(request):
     return web.Response(text=content,content_type='text/html')
 
 
-@app.route('/create/<first_name>/<last_name>')
-def create(first_name=None, last_name=None):
-  return 'Hello ' + first_name + ',' + last_name
+@routes.get('/create/{first_name}/{last_name}')
+def create(request):
+    firstName=request.match_info['first_name']
+    lastName=request.match_info['last_name']
+    content=f"Hell mr. {firstName} {lastName}"
+    return web.Response(text=content,content_type='text/html')
 
 
 @routes.post("/webhook")
