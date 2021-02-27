@@ -18,7 +18,6 @@ import jwt
 import time
 import requests
 
-app = Flask(__name__)
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
 routes = web.RouteTableDef()
