@@ -17,6 +17,7 @@ from cryptography.hazmat.backends import default_backend
 import jwt
 import time
 import requests
+import aiohttp_cors
 
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
@@ -152,7 +153,6 @@ async def issue_comment_created(event, gh, *args, **kwargs):
         private_key=os.environ.get("GH_PRIVATE_KEY"),
     )
     comments_url = event.data["comment"]["url"]
-
     response = await gh.post(
         f"{comments_url}/reactions",
         data={"content": "heart"},
@@ -170,8 +170,10 @@ def connectDB():
     
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
-    
     app.router.add_routes(routes)
+    cors = aiohttp_cors.setup(app)
+    for route in list(app.router.routes()):
+       cors.add(route)
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
