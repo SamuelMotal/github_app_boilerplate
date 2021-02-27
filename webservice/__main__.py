@@ -87,8 +87,8 @@ def validateInstallation(username,repository_name):
     #print('Content: ', resp.content.decode())
     #https://docs.github.com/en/rest/reference/apps#get-a-repository-installation-for-the-authenticated-app
     resp = requests.get('https://api.github.com/repos/{username}/{repository_name}/installation', headers=headersToSend)
-    print(resp.content.decode()['login'])
-    if(resp.status_code == 200 and response.data["account"]["login"]==username):
+    print(resp.data["account"]["login"])
+    if(resp.status_code == 200 and resp.data["account"]["login"]==username):
         print("installation validated!!")
     else:
         print("installation not validated!!!")
