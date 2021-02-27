@@ -35,7 +35,8 @@ def create(request):
     user=request.match_info['user']
     repository=request.match_info['repository']
     content = validateInstallation(user,repository)
-    return web.Response(text=content,content_type='text/html')
+    res = {"result": content}
+    return web.json_response(res)
 
 
 @routes.post("/webhook")
