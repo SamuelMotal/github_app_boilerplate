@@ -17,17 +17,24 @@ from cryptography.hazmat.backends import default_backend
 import jwt
 import time
 import requests
+from flask import Flask, render_template
+from flask import send_file
 
-#testchange
+app = Flask(__name__)
 router = routing.Router()
 cache = cachetools.LRUCache(maxsize=500)
-
 routes = web.RouteTableDef()
+
 
 @routes.get("/", name="home")
 async def handle_get(request):
     content = validateInstallation("SamuelMotal","github_app_boilerplate")
     return web.Response(text=content,content_type='text/html')
+
+
+@app.route('/create/<first_name>/<last_name>')
+def create(first_name=None, last_name=None):
+  return 'Hello ' + first_name + ',' + last_name
 
 
 @routes.post("/webhook")
