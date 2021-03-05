@@ -35,7 +35,7 @@ def create(request):
     user=request.match_info['user']
     repository=request.match_info['repository']
     content = validateInstallation(user,repository)
-    res = {"result": content}
+    res = {"app_installed": content}
     return web.json_response(res)
 
 
@@ -97,9 +97,9 @@ def validateInstallation(username,repository_name):
     resp = requests.get(f'https://api.github.com/repos/{username}/{repository_name}/installation', headers=headersToSend)
     print(resp.json())
     if(resp.status_code == 200 and resp.json()["account"]["login"]==username):
-        return "installation validated!!"
+        return "true"
     else:
-        return "installation not validated!!!"
+        return "false"
 
 
 @router.register("installation", action="created")
